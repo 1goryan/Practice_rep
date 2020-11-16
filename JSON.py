@@ -17,14 +17,27 @@ print(nums_new)"""
 
 import json
 
-file_name = "E:\Pyth0n\python\modules\\user.json"
-try:
-    with open(file_name) as f1 :
-        user = json.load(f1)
-except:
-    user_name = input("Enter you name")
-    with open(file_name, "w", encoding="utf-8") as f: #encoding="utf-8" нужен для чтения кирилицы
-        json.dump(user_name, f, ensure_ascii=False) #ensure_ascii=False отключаем кодировку ascii
-        print("We saved your name as " + user_name)
-else:
-    print("Wellcome " + user)
+def get_user_name():
+    #получаем имя пользователя, если оно есть
+    file_name = "E:\Pyth0n\python\modules\\user.json"
+    try:
+        with open(file_name) as f1 :
+            user_name = json.load(f1)
+    except FileNotFoundError:
+        return None
+    else:
+        return user_name
+       
+def user_greeting():
+    #приветствие пользователя
+    user_name = get_user_name()
+    if user_name:
+        print("Wellcome " + user_name)
+    else:
+        user_name = input("Введите ваше имя")
+        file_name = "E:\Pyth0n\python\modules\\user.json"    
+        with open(file_name, "w", encoding="utf-8") as f: #encoding="utf-8" нужен для чтения кирилицы
+            json.dump(user_name, f, ensure_ascii=False) #ensure_ascii=False отключаем кодировку ascii
+            print("We saved your name as " + user_name)
+    
+user_greeting()
