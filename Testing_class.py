@@ -53,25 +53,24 @@ import unittest
 class TestAnonymousSurvey(unittest.TestCase):
     #Тесты для класса AnonymousSurvey
     
+    def setUp(self): 
+        #создание опроса и набора ответов для всех методов
+        question = "Which programming language are you most interested in?"
+        self.my_survey = AnonymousSurvey(question)
+        self.responses = ['Java', 'Python', 'C#', 'Go', 'JavaScript']
+
     def test_save_single_response(self):
-        #проверка, что один ответ сохранен в списке
-        question = "Which programming language are you most interested in?"
-        my_survey = AnonymousSurvey(question)
-        my_survey.save_response("Java") 
+        #проверка, что ответ был сохранен в нужном месте в списке
+        self.my_survey.save_response(self.responses[1]) 
+        self.assertIn("Python", self.my_survey.responses)
 
-        self.assertIn("Java", my_survey.responses)
+    def  test_save_list_responses(self):
+        #проверяем, что в сохраненном списке есть правильный ответ
+        for response in self.responses: 
+            self.my_survey.save_response(response) 
 
-
-    def  test_save_five_responses(self):
-        #проверяем, что 5 ответов были сохранены
-        question = "Which programming language are you most interested in?"
-        my_survey = AnonymousSurvey(question)
-        responses = ['Java', 'Python', 'C#', 'Go', 'JavaScript']
-        for response in responses:
-            my_survey.save_response(response)
-
-        for response in responses:
-            self.assertIn("Java", my_survey.responses)      
+        for response in self.responses:
+            self.assertIn("Python", self.my_survey.responses)      
 
 
 if __name__ == "__main__":
