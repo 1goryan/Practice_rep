@@ -6,8 +6,7 @@
 #assertIn(элемент, список) проверяет, что элемент есть в списке
 #assertNotIn(элемент, список) проверяет, что элемента нет в списке
 
-
-class AnonymousSurvey():
+"""class AnonymousSurvey():
     #класс для анонимных ответов
 
     def __init__ (self, question):
@@ -30,7 +29,7 @@ class AnonymousSurvey():
             print("- " + response)
 
 
-"""question = "Which programming language are you most interested in?"
+question = "Which programming language are you most interested in?"
 my_survey = AnonymousSurvey(question)
 
 my_survey.show_question()
@@ -44,7 +43,7 @@ while True:
 
 print("\n Thanks for answers")
 
-my_survey.show_results()"""
+my_survey.show_results()
 
 #from Testing_class import AnonymousSurvey
 import unittest
@@ -74,6 +73,41 @@ class TestAnonymousSurvey(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main()"""
 
+import unittest
+
+class Employee():
+
+    def __init__(self, first_name, second_name, salary):
+        #создаем класс, который принимает имя, фамилию и зарпалту
+        self.first_name = first_name
+        self.second_name = second_name
+        self.salary = salary
+
+    def show(self):
+        #метод показывает фамилию имя и зарплату
+        return self.second_name + " " + self.first_name + " " + str(self.salary)
+
+    def raise_salary(self, increase = 5000):
+        #метод увеличивает атрибут salary, если значение не задано, то на 5000
+        self.salary += increase
+        return self.salary
+    
+class Employee_test(unittest.TestCase):
+    #создаем класс для тестирования класса Employee
+    
+    def setUp(self):
+        self.employee_1 = Employee("Andrei", "Vasiliev", 20000)
+
+    def test_show(self):
+        employee = self.employee_1.show()
+        self.assertEqual(employee, "Vasiliev Andrei 20000")
+    
+    def test_raise(self):
+        salary = self.employee_1.raise_salary(20000)
+        self.assertEqual(salary, 40000)
+
+if __name__ == "__main__":
+    unittest.main()
 
