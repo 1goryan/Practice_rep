@@ -131,6 +131,7 @@ cv2.waitKey()
 cv2.destroyAllWindows
 """
 
+
 import cv2
 import numpy as np
 import glob
@@ -139,15 +140,38 @@ import pytesseract
 src = cv2.imread('blank/blank/src_last1.jpg')
 src = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY )
 
+height = 1755
+width = 1241
+
+hig = src.shape[0]
+wid = src.shape[1]
+
+kf_w = wid / width
+
+kf_h = hig / height
+
+kf_s = kf_h * kf_w
+
+edges_in = cv2.Canny(src, 0, 255)
+contours_in, _ = cv2.findContours(edges_in, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+points = []
+for i in range(len(contours_in)):
+    if cv2.contourArea(contours_in[i]) > 100000 * kf_s and cv2.contourArea(contours_in[i]) < 1000000 * kf_s:
+        #print(1)
+        #cv2.drawContours(src, contours_in, i, (255, 0, 255), thickness = 1)
+        a = contours_in[i]
+        points.append(a[0][0][0])
+        points.append(a[0][0][1])
+
 
 d = {}
 
 def template():
 
-    x = 214
-    y = 430
-    h = 38
-    w = 34
+    x = points[8] + 69 
+    y = points[9] + 65 
+    h = 38 
+    w = 34 
     out = src[y:y+h, x:x+w]
     cv2.imwrite('blank/blank/template1.jpg', out)
 
@@ -190,13 +214,14 @@ def compare(hist_img):
 def answer_1():
     d = 0
     for i in range(5):
-        x = 214 + d
-        y = 429
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 69 * kf_w + d
+        y = points[9] + 65 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/1_1_{}.jpg'.format(i), out)
+
 
 #src = cv2.rectangle(src, (685, 1480), (1170, 1553), (255, 0, 255))
 #cv2.imwrite("blank/srccc.jpg", src)
@@ -205,23 +230,24 @@ def answer_1():
 def answer_2():
     d = 0
     for i in range(5):
-        x = 214 + d
-        y = 472
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 69 * kf_w + d
+        y = points[9] + 107 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_h
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/1_2_{}.jpg'.format(i), out)
+
 
  
 def answer_3():
     d = 0
     for i in range(5):
-        x = 214 + d
-        y = 515
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 69 * kf_w + d
+        y = points[9] + 150 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/1_3_{}.jpg'.format(i), out)
 
@@ -229,22 +255,22 @@ def answer_3():
 def answer_4():
     d = 0
     for i in range(5):
-        x = 214 + d
-        y = 558
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 69 * kf_w + d
+        y = points[9] + 193 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/1_4_{}.jpg'.format(i), out)
 
 def answer_5():
     d = 0
     for i in range(5):
-        x = 214 + d
-        y = 601
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 69 * kf_w + d
+        y = points[9] + 236 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/1_5_{}.jpg'.format(i), out)
 
@@ -252,35 +278,37 @@ def answer_5():
 def answer_6():
     d = 0
     for i in range(5):
-        x = 214 + d
-        y = 644
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 69 * kf_w + d
+        y = points[9] + 279 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/1_6_{}.jpg'.format(i), out)
+
 
 
 def answer_7():
     d = 0
     for i in range(5):
-        x = 532 + d
-        y = 429
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 387 * kf_w + d
+        y = points[9] + 64 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/2_1_{}.jpg'.format(i), out)
+
 
 
 def answer_8():
     d = 0
     for i in range(5):
-        x = 532 + d
-        y = 472
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 387 * kf_w + d
+        y = points[9] + 107 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/2_2_{}.jpg'.format(i), out)
 
@@ -288,11 +316,11 @@ def answer_8():
 def answer_9():
     d = 0
     for i in range(5):
-        x = 532 + d
-        y = 515
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 387 * kf_w + d
+        y = points[9] + 150 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/2_3_{}.jpg'.format(i), out)
 
@@ -300,11 +328,11 @@ def answer_9():
 def answer_10():
     d = 0
     for i in range(5):
-        x = 532 + d
-        y = 558
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 387 * kf_w + d
+        y = points[9] + 193 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/2_4_{}.jpg'.format(i), out)
 
@@ -312,11 +340,11 @@ def answer_10():
 def answer_11():
     d = 0
     for i in range(5):
-        x = 532 + d
-        y = 601
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 387 * kf_w + d
+        y = points[9] + 236 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/2_5_{}.jpg'.format(i), out)
 
@@ -324,56 +352,60 @@ def answer_11():
 def answer_12():
     d = 0
     for i in range(5):
-        x = 532 + d
-        y = 644
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 387 * kf_w + d
+        y = points[9] + 279 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/2_6_{}.jpg'.format(i), out)
+
 
 def answer_13():
     d = 0
     for i in range(5):
-        x = 851 + d
-        y = 429
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 706 * kf_w + d
+        y = points[9] + 64 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/3_1_{}.jpg'.format(i), out)
+
 
 def answer_14():
     d = 0
     for i in range(5):
-        x = 851 + d
-        y = 472
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 706 * kf_w + d
+        y = points[9] + 107 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/3_2_{}.jpg'.format(i), out)
-   
+
+  
 
 def answer_15():
     d = 0
     for i in range(5):
-        x = 851 + d
-        y = 515
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 706 * kf_w + d
+        y = points[9] + 150 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/3_3_{}.jpg'.format(i), out)
+
 
 def answer_16():
     d = 0
     for i in range(5):
-        x = 851 + d
-        y = 558
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 706 * kf_w + d
+        y = points[9] + 193 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/3_4_{}.jpg'.format(i), out)
 
@@ -381,33 +413,35 @@ def answer_16():
 def answer_17():
     d = 0
     for i in range(5):
-        x = 851 + d
-        y = 601
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 706 * kf_w + d
+        y = points[9] + 236 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/3_5_{}.jpg'.format(i), out)
+
 
 def answer_18():
     d = 0
     for i in range(5):
-        x = 851 + d
-        y = 644
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 706 * kf_w + d
+        y = points[9] + 279 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_h
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/3_6_{}.jpg'.format(i), out)
+
 
 def answer_19():
     d = 0
     for i in range(5):
-        x = 214 + d
-        y = 764
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 69 * kf_w + d
+        y = points[9] + 399 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_h
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/4_1_{}.jpg'.format(i), out)
 
@@ -415,11 +449,11 @@ def answer_19():
 def answer_20():
     d = 0
     for i in range(5):
-        x = 214 + d
-        y = 807
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 69 * kf_w + d
+        y = points[9] + 442 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/4_2_{}.jpg'.format(i), out)
 
@@ -427,11 +461,11 @@ def answer_20():
 def answer_21():
     d = 0
     for i in range(5):
-        x = 214 + d
-        y = 850
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 69 * kf_w + d
+        y = points[9] + 485 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/4_3_{}.jpg'.format(i), out)
 
@@ -439,11 +473,11 @@ def answer_21():
 def answer_22():
     d = 0
     for i in range(5):
-        x = 214 + d
-        y = 893
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 69 * kf_w + d
+        y = points[9] + 528 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/4_4_{}.jpg'.format(i), out)
 
@@ -451,23 +485,22 @@ def answer_22():
 def answer_23():
     d = 0
     for i in range(5):
-        x = 214 + d
-        y = 936
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 69 * kf_w + d
+        y = points[9] + 571 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/4_5_{}.jpg'.format(i), out)
-
 
 def answer_24():
     d = 0
     for i in range(5):
-        x = 214 + d
-        y = 979
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 69 * kf_w+ d
+        y = points[9] + 614 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/4_6_{}.jpg'.format(i), out)
 
@@ -475,33 +508,35 @@ def answer_24():
 def answer_25():
     d = 0
     for i in range(5):
-        x = 532 + d
-        y = 764
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 387 * kf_w + d
+        y = points[9] + 399 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/5_1_{}.jpg'.format(i), out)
+
+
 
 def answer_26():
     d = 0
     for i in range(5):
-        x = 532 + d
-        y = 807
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 387  * kf_w + d
+        y = points[9] + 442 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/5_2_{}.jpg'.format(i), out)
 
 def answer_27():
     d = 0
     for i in range(5):
-        x = 532 + d
-        y = 850
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 387 * kf_w + d
+        y = points[9] + 485 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/5_3_{}.jpg'.format(i), out)
 
@@ -509,11 +544,11 @@ def answer_27():
 def answer_28():
     d = 0
     for i in range(5):
-        x = 532 + d
-        y = 893
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 387 * kf_w + d
+        y = points[9] + 528 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/5_4_{}.jpg'.format(i), out)
 
@@ -521,11 +556,11 @@ def answer_28():
 def answer_29():
     d = 0
     for i in range(5):
-        x = 532 + d
-        y = 936
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 387  * kf_w + d
+        y = points[9] + 571 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/5_5_{}.jpg'.format(i), out)
 
@@ -533,23 +568,22 @@ def answer_29():
 def answer_30():
     d = 0
     for i in range(5):
-        x = 532 + d
-        y = 979
-        h = 39
-        w = 34
-        d += 39
+        x = points[8] + 387 * kf_w + d
+        y = points[9] + 614 * kf_h
+        h = 39 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/5_6_{}.jpg'.format(i), out)
-
 
 def answer_31():
     d = 0
     for i in range(5):
-        x = 852 + d
-        y = 764
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 707 * kf_w + d
+        y = points[9] + 399 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/6_1_{}.jpg'.format(i), out)
 
@@ -557,45 +591,46 @@ def answer_31():
 def answer_32():
     d = 0
     for i in range(5):
-        x = 852 + d
-        y = 807
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 707 * kf_w + d
+        y = points[9] + 442 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/6_2_{}.jpg'.format(i), out)
+
 
 def answer_33():
     d = 0
     for i in range(5):
-        x = 852 + d
-        y = 850
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 707 * kf_w + d
+        y = points[9] + 485 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/6_3_{}.jpg'.format(i), out)
-
 
 def answer_34():
     d = 0
     for i in range(5):
-        x = 852 + d
-        y = 893
-        h = 38
-        w = 34
-        d += 39
+        x = points[8] + 707 * kf_w + d
+        y = points[9] + 528 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/6_4_{}.jpg'.format(i), out)
+
 
 def answer_35():
     d = 0
     for i in range(5):
-        x = 852 + d
-        y = 935
-        h = 39
-        w = 34
-        d += 39
+        x = points[8] + 707 * kf_w + d
+        y = points[9] + 570 * kf_h
+        h = 39 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/6_5_{}.jpg'.format(i), out)
 
@@ -603,11 +638,11 @@ def answer_35():
 def answer_36():
     d = 0
     for i in range(5):
-        x = 852 + d
-        y = 979
-        h = 39
-        w = 34
-        d += 39
+        x = points[8] + 707 * kf_w + d
+        y = points[9] + 614 * kf_h
+        h = 39 * kf_h
+        w = 34 * kf_w
+        d += 39 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/6_6_{}.jpg'.format(i), out)
 
@@ -615,11 +650,11 @@ def answer_36():
 def answer_37():
     d = 0
     for i in range(9):
-        x = 213 + d
-        y = 1159
-        h = 38
-        w = 34
-        d += 40
+        x = points[0] + 107 * kf_w + d
+        y = points[1] + 73 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 40 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/7_1_{}.jpg'.format(i), out)
 
@@ -627,65 +662,62 @@ def answer_37():
 def answer_38():
     d = 0
     for i in range(9):
-        x = 213 + d
-        y = 1288
-        h = 38
-        w = 34
-        d += 40
+        x = points[0] + 107 * kf_w + d
+        y = points[1] + 202 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 40 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/7_2_{}.jpg'.format(i), out)
-
 
 def answer_39():
     d = 0
     for i in range(9):
-        x = 213 + d
-        y = 1417
-        h = 38
-        w = 34
-        d += 40
+        x = points[0] + 107 * kf_w + d
+        y = points[1] + 331 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 40 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/7_3_{}.jpg'.format(i), out)
+
 
 def answer_40():
     d = 0
     for i in range(9):
-        x = 708 + d
-        y = 1159
-        h = 38
-        w = 34
-        d += 41
+        x = points[0] + 602 * kf_w + d
+        y = points[1] + 73 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 41 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/7_4_{}.jpg'.format(i), out)
 
 def answer_41():
     d = 0
     for i in range(9):
-        x = 708 + d
-        y = 1288
-        h = 38
-        w = 34
-        d += 41
+        x = points[0] + 602 * kf_w + d
+        y = points[1] + 202 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 41 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/7_5_{}.jpg'.format(i), out)
 
 def answer_42():
     d = 0
     for i in range(9):
-        x = 708 + d
-        y = 1417
-        h = 38
-        w = 34
-        d += 41
+        x = points[0] + 602 * kf_w + d
+        y = points[1] + 330 * kf_h
+        h = 38 * kf_h
+        w = 34 * kf_w
+        d += 41 * kf_w
         out = src[y:y+h, x:x+w]
         cv2.imwrite('blank/7_6_{}.jpg'.format(i), out)
 
 
 
-
-
 """
-
 answer_1()
 answer_2()
 answer_3()
@@ -758,7 +790,7 @@ def score_miss(dictionary):
     miss = 0   
     for i in range(len(dictionary)):
         if dictionary.get(i) == 'Miss':
-            miss += 1
+            miss += 1        
     print("Колличество исправлений равно: " + str(miss))    
 
 def score_right_answers(dictionary):
@@ -1155,52 +1187,62 @@ def score_right_answers(dictionary):
 
 def blank_name():
     
-    x = 510
-    y = 110
-    h = 50
-    w = 310
+    x = points[8] + 365 * kf_w
+    y = points[9] - 255 * kf_h
+    h = 50 * kf_h
+    w = 310 * kf_w
     out = src[y:y+h, x:x+w]
     text = pytesseract.image_to_string(out, lang = 'rus', config = '--psm 6')
     return text
 
+
 def user_name():
 
-    x = 245
-    y = 155
-    h = 510
-    w = 60
+    x = points[8] + 100 * kf_w
+    y = points[9] - 210 * kf_h
+    h = 510 * kf_h
+    w = 60 * kf_w
     out = src[y:y+h, x:x+w]
     text = pytesseract.image_to_string(out, lang = 'rus', config = '--psm 6')
     return text
 
 def group():
 
-    x = 270
-    y = 225
-    h = 485
-    w = 68
+    x = points[8] + 125 * kf_w
+    y = points[9] - 140 * kf_h
+    h = 485 * kf_h
+    w = 68 * kf_w
     out = src[y:y+h, x:x+w]
     text = pytesseract.image_to_string(out, lang = 'rus', config = '--psm 6')
     return text
+
+print(points[0])
 
 def data():
     
-    x = 110
-    y = 1480
-    h = 73
-    w = 480
+    x = points[0] + 4 * kf_w
+    y = points[1] + 394 * kf_h
+    h = 73 * kf_h
+    w = 480 * kf_w
     out = src[y:y+h, x:x+w]
     text = pytesseract.image_to_string(out, lang = 'rus', config = '--psm 6')
     return text
 
+
 def sign():
-    x = 685
-    y = 1480
-    h = 73
-    w = 485
+    x = points[0] + 579 *kf_w
+    y = points[1] + 394 * kf_h
+    h = 73 * kf_h
+    w = 485 * kf_w
     out = src[y:y+h, x:x+w]
     img = cv2.imwrite("blank/blank/sign.jpg", out)
     return img
+
+
+
+#cv2.imwrite('blank/blank/src_123.jpg', src)
+
+
 
 
 """
